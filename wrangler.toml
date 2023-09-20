@@ -12,7 +12,7 @@ command = "cargo install -q worker-build && worker-build --release"
 MY_DOMAIN = "blog.imipy.com"
 NOTION_DOMAIN = "ac0d3r.notion.site"
 PAGE_MAP = '{"/":"4b2780d3bf864ab3bee6044612f6e631","/links":"5aec357c2b3b4297840c388055644954","/donate":"7e284265437a49249728e75aea5564bf","/about":"0d05dcdc061e43ed9417db8b3af2d5ce"}'
-COMMENT_MAP = '{"data-repo":"ac0d3r/notion-blog","data-repo-id":"R_kgDOI-Cshw","data-category-id":"DIC_kwDOI-Csh84CZeRn","data-mapping":"title","data-input-position":"top","data-theme":"preferred_color_scheme","data-lang":"zh-CN"}'
+COMMENT_MAP = '{"data-repo":"ac0d3r/notion-blog","data-repo-id":"R_kgDOI-Cshw","data-category-id":"DIC_kwDOI-Csh84CZeRm","data-mapping":"title","data-input-position":"top","data-theme":"preferred_color_scheme","data-lang":"zh-CN"}'
 PAGE_TITLE = "巴斯.zznQ"
 PAGE_DESCRIPTION = "巴斯.zznQ's Blog"
 ICON_URL = "https://avatars.githubusercontent.com/u/26270009?v=4"
