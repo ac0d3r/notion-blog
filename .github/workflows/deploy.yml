@@ -15,7 +15,7 @@ jobs:
       - name: "Install Rust toolchain"
         run: rustup target add wasm32-unknown-unknown
       - name: Deploy
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v3.1.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
 #        run: cargo install wrangler && wrangler publish
