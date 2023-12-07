@@ -224,6 +224,7 @@ fn get_comment(comment_map: &HashMap<String, String>) -> String {
       function addComment() {
           let my_giscus = document.getElementById('giscus');
           waitForElementToExist('.notion-table_of_contents-block').then((el)=>{
+          addTOC();
           if (my_giscus!==null)return;
           let comment = document.createElement('script');
               comment.id = "giscus";
@@ -356,7 +357,7 @@ fn rewriter(html: Vec<u8>, blog_env: BlogEnv) -> Vec<u8> {
           if (document.querySelector(selector)) {
             return resolve(document.querySelector(selector));
           }
-          const observer = new MutationObserver(() => {
+          const observer = new MutationObserver(function(mutationsList, observer) {
             if (document.querySelector(selector)) {
               resolve(document.querySelector(selector));
               observer.disconnect();
@@ -387,6 +388,10 @@ fn rewriter(html: Vec<u8>, blog_env: BlogEnv) -> Vec<u8> {
             pseudo_selection.style.height = "8vh";
           }
         }
+        let layout = document.querySelector(".layout");
+        if (layout != null){
+          layout.style.paddingBottom="2vh";
+        }
         let notion_page_controls = document.querySelector("div.pseudoSelection div.notion-page-controls");
         if (notion_page_controls !== null){
           notion_page_controls.remove()
@@ -398,10 +403,10 @@ fn rewriter(html: Vec<u8>, blog_env: BlogEnv) -> Vec<u8> {
             notranslate.style.marginTop="-36px";
         }
       }
-      const breadcrumb = new MutationObserver(function(mutationsList, observer) {
+      const page_observe = new MutationObserver(function(mutationsList, observer) {
         remove_notion_page_content();
       });
-      breadcrumb.observe(document.querySelector('#notion-app'), {
+      page_observe.observe(document.querySelector('#notion-app'), {
         childList: true,
         subtree: true,
       });
@@ -518,7 +523,7 @@ fn rewriter(html: Vec<u8>, blog_env: BlogEnv) -> Vec<u8> {
                     Ok(())
                 }),
                 element!("body", |el| {
-                    el.append(rewriter_http, ContentType::Html);
+                    // el.append(rewriter_http, ContentType::Html);
                     el.append(base, ContentType::Html);
                     el.append(resize, ContentType::Html);
                     el.append(theme, ContentType::Html);
@@ -562,9 +567,12 @@ async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
         }
         "/robots.txt" => {
             return Response::ok(format!(
-                "Sitemap: https://{}/sitemap.xml",
+                "User-agent: *\nAllow: /\nSitemap: https://{}/sitemap.xml",
                 blog_env.my_domain
             ));
+        }
+        "/images/favicon.ico" => {
+            return Response::redirect(blog_env.icon.parse()?);
         }
         _ => {}
     }
